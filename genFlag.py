@@ -32,18 +32,22 @@ for i in message:
         print(infiles)
 
 
+def mergeWavs():
+        data= []
+        for infile in infiles:
+            print(infile)
+            w = wave.open(infile, 'rb')
+            data.append( [w.getparams(), w.readframes(w.getnframes())] )
+            w.close()
+        
+        output = wave.open(outfile, 'wb')
+        output.setparams(data[0][0])
+        output.writeframes(data[0][1])
+        output.writeframes(data[1][1])
+        output.close()
+        print(len(data))
 
-data= []
-for infile in infiles:
-    w = wave.open(infile, 'rb')
-    data.append( [w.getparams(), w.readframes(w.getnframes())] )
-    w.close()
-
-output = wave.open(outfile, 'wb')
-output.setparams(data[0][0])
-output.writeframes(data[0][1])
-output.writeframes(data[1][1])
-output.close()
+mergeWavs()
 
 
-
+#SOX python !!!! sox  1.wav 2.wav long.wav
